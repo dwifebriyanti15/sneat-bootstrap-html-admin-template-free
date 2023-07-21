@@ -1,4 +1,50 @@
-<!DOCTYPE html>
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Add your database connection details
+$host = 'localhost';
+$dbname = 'userdb';
+$username = 'root';
+$password = '';
+
+// Connect to the database
+$koneksiDB = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
+$options = [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_EMULATE_PREPARES => false,
+];
+$pdo = new PDO($koneksiDB, $username, $password);
+
+  // Check if the login form is submitted by the user
+if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
+  $username = $_POST['username'];
+  $password = $_POST['password'];
+  $kembali  = "../php/login.php";
+  $role = "SELECT role FROM user WHERE username = :username";
+  // Check if the user input matches the database records
+  $check = "SELECT * FROM user WHERE username = :username AND password = :password";
+  $stmt = $pdo->prepare($check);
+  $stmt->execute(['username' => $username, 'password' => $password]);
+  
+  if ($stmt->rowCount() > 0) {
+      session_start();
+      $stored_pw = $row['password'];
+
+      if (password_verify($password, $stored_pw)) {
+         
+         echo "Berhasil masuk<br> Selamat datang'.$username.'";
+         header("Location: ../index.php");
+         exit();
+         } else {
+         echo "Username atau password yang Anda masukkan salah!";
+         echo "kembali ke <a href='" .$kembali."'>Login<a/>";
+      }
+  }   
+}
+$pdo = null;
+?>
 
 <html
   lang="en"
@@ -15,7 +61,7 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Cards basic - UI elements | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
+    <title>Tugas Siswa</title>
 
     <meta name="description" content="" />
 
@@ -83,19 +129,19 @@
               
   
               <li class="menu-item">
-                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <a href="materi.php" class="menu-link menu-toggle">
                   <i class="menu-icon tf-icons bx-box"></i>
                   <div>Materi</div>
                 </a>
 
                 <li class="menu-item">
-                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <a href="profil.php" class="menu-link menu-toggle">
                   <i class="menu-icon tf-icons bx bx-user"></i>
                   <div>Akun Saya</div>
                 </a>
                 <ul class="menu-sub">
                   <li class="menu-item">
-                    <a href="#" class="menu-link">
+                    <a href="pengaturan.php" class="menu-link">
                       <div>Edit profil</div>
                     </a>
                   </li>
@@ -106,6 +152,7 @@
                   </li>
                 </ul>
               </li>
+              <img src="../assets/img/default.png" alt="">
           </aside>
           <!-- / Menu -->
   
@@ -131,7 +178,7 @@
                     <input
                       type="text"
                       class="form-control border-0 shadow-none"
-                      placeholder="Search..."
+                      placeholder="Cari sesuatu..."
                       aria-label="Search..."
                     />
                   </div>
@@ -156,9 +203,9 @@
                                 <img src="../assets/img/default.png" alt class="w-px-40 h-auto rounded-circle" />
                               </div>
                             </div>
-                            <div class="flex-grow-1">
-                              <span class="fw-semibold d-block">$nama</span>
-                              <small class="text-muted">$role</small>
+                          <div class="flex-grow-1">
+                              <span class="fw-semibold d-block"><?php echo $nama; ?></span>
+                              <small class="text-muted"><?php echo $role; ?></small>
                             </div>
                           </div>
                         </a>
@@ -458,3 +505,5 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>
 </html>
+$pdo = null
+?>

@@ -1,4 +1,18 @@
-<!DOCTYPE html>
+<?php
+include('koneksi.php');
+
+error_reporting(E_ALL);
+ini_set('display_errors', true);
+
+session_start();
+if (isset($_SESSION['username']) && isset($_SESSION['role'])) {
+    $username = $_SESSION['username'];
+    $role = $_SESSION['role'];
+} else {
+    header("Location: error.php");
+    exit();
+}
+?>
 
 <html
   lang="en"
@@ -64,7 +78,7 @@
             <a href="index.html" class="app-brand-link">
               <span class="app-brand-logo demo">
 
-              <span class="app-brand-text demo menu-text fw-bolder ms-2">Sneat</span>
+              <span class="app-brand-text demo menu-text fw-bolder ms-2">Diagnostik Online</span>
             </a>
 
             <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -77,25 +91,25 @@
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
             <li class="menu-item">
-              <a href="index.html" class="menu-link">
+              <a href="" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
               </a>
             </li>
 
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <a href="" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-user"></i>
                 <div>Akun Saya</div>
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="#" class="menu-link">
+                  <a href="pengaturan.php" class="menu-link">
                     <div>Edit profil</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="forms-input-groups.html" class="menu-link">
+                  <a href="login.php" class="menu-link">
                     <div data-i18n="Input groups">Logout</div>
                   </a>
                 </li>
@@ -103,13 +117,13 @@
             </li>
 
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <a href="tugas.php" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-user"></i>
                 <div>Tugas Siswa</div>
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="#" class="menu-link">
+                  <a href="nilai.php" class="menu-link">
                     <div>Nilai Siswa</div>
                   </a>
                 </li>
@@ -139,7 +153,7 @@
                   <input
                     type="text"
                     class="form-control border-0 shadow-none"
-                    placeholder="Search..."
+                    placeholder="Cari Sesuatu..."
                     aria-label="Search..."
                   />
                 </div>
@@ -153,7 +167,7 @@
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                      <img src="../assets/img/avatars/default.png" alt class="w-px-40 h-auto rounded-circle" />
+                      <img src="../assets/img/default.png" alt class="w-px-40 h-auto rounded-circle" />
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
@@ -162,12 +176,12 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar avatar-online">
-                              <img src="../assets/img/avatars/default.png" alt class="w-px-40 h-auto rounded-circle" />
+                              <img src="../assets/img/default.png" alt class="w-px-40 h-auto rounded-circle" />
                             </div>
                           </div>
                           <div class="flex-grow-1">
-                            <span class="fw-semibold d-block">$nama</span>
-                            <small class="text-muted">$role</small>
+                            <span class="fw-semibold d-block"><b><?php echo $username ?> <b><span>
+                            <small class="text-muted"><?php echo $role ?></small>
                           </div>
                         </div>
                       </a>
@@ -187,27 +201,3 @@
                   </ul>
                 </li>
                 <!--/ User -->
-              </ul>
-            </div>
-          </nav>
-    <!-- Core JS -->
-    <!-- build:js assets/vendor/js/core.js -->
-    <script src="../assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="../assets/vendor/libs/popper/popper.js"></script>
-    <script src="../assets/vendor/js/bootstrap.js"></script>
-    <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-
-    <script src="../assets/vendor/js/menu.js"></script>
-    <!-- endbuild -->
-
-    <!-- Vendors JS -->
-
-    <!-- Main JS -->
-    <script src="../assets/js/main.js"></script>
-
-    <!-- Page JS -->
-
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-  </body>
-</html>
